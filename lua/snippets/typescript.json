@@ -1,1 +1,1 @@
-{"hera":{"body":"console.log(JSON.stringify($1, null, 2))","prefix":"hera"},"delete-later":{"prefix":"delete-later","body":"let controller: AppController;"}}
+{"hera":{"body":"console.log(JSON.stringify($1, null, 2))","prefix":"hera"},"delete-later":{"prefix":"delete-later","body":"let controller: AppController;"},"sleep":{"prefix":"sleep","body":"await new Promise((resolve) => setTimeout(resolve, 100));"}}

@@ -181,3 +181,6 @@ vim.keymap.set("n", "<leader><leader>", function()
 		vim.cmd("q")
 	end
 end, {})
+
+-- Inc number change because of tmux
+vim.keymap.set("n", "<C-a>", "<C-c>", { noremap = true, silent = true })
