@@ -12,6 +12,7 @@ vim.lsp.config("ts_ls", {
 -- 	},
 -- })
 
+vim.lsp.enable("copilot")
 vim.lsp.enable("pyright")
 vim.lsp.enable("denols")
 vim.lsp.enable("ts_ls")
@@ -21,7 +22,7 @@ vim.lsp.config("html", {
 	filetypes = { "html", "hbs", "handlebars" },
 })
 vim.lsp.enable("html")
--- vim.lsp.enable("htmx")
+vim.lsp.enable("htmx")
 vim.lsp.enable("css_variables")
 vim.lsp.enable("expert")
 vim.lsp.config("tailwindcss", {
