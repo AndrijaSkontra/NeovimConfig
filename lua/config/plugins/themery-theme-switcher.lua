@@ -3,6 +3,7 @@ return {
 	lazy = false,
 	opts = {
 		themes = {
+			"alabaster",
 			"rose-pine-moon",
 			"rose-pine-main",
 			"rose-pine-dawn",
@@ -20,7 +21,6 @@ return {
 			"gruvbox",
 			"vscode",
 			"onedark",
-			"vague",
 		},
 	},
 	keys = {
