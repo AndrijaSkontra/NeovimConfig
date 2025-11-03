@@ -9,7 +9,7 @@ return {
 	opts = {
 		notify_on_error = true,
 		format_on_save = {
-			timeout_ms = 500,
+			timeout_ms = 1000,
 			-- lsp_format = "fallback",
 		},
 		formatters_by_ft = {
@@ -23,7 +23,7 @@ return {
 			typescript = getTypescriptFormater(),
 			ts = getTypescriptFormater(),
 			tsx = getTypescriptFormater(),
-			handlebars = { "prettier" },
+			handlebars = { "djlint" },
 			-- python = { "ruff" },
 			-- c = { "clang-format" },
 		},

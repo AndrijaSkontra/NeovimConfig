@@ -1,1 +1,1 @@
-{"stringifyJsonAndLog":{"body":"console.log(JSON.stringify($1, null, 2))","prefix":"stringifyJsonAndLog"}}
+{"sleep":{"body":"await new Promise((resolve) => setTimeout(resolve, 1000))","prefix":"sleep"},"hera":{"body":"console.log(JSON.stringify($1, null, 2))","prefix":"hera"},"stringifyJsonAndLog":{"body":"console.log(JSON.stringify($1, null, 2))","prefix":"stringifyJsonAndLog"}}
