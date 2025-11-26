@@ -12,7 +12,7 @@ vim.lsp.config("ts_ls", {
 -- 	},
 -- })
 
-vim.lsp.enable("copilot")
+-- vim.lsp.enable("copilot")
 vim.lsp.enable("pyright")
 -- vim.lsp.enable("denols")
 vim.lsp.enable("ts_ls")

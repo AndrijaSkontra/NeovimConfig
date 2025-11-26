@@ -16,7 +16,8 @@ vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "Move focus to the ri
 
 -- refactor this into a helper file...
 local function is_macos()
-	return os.getenv("HOME") and os.getenv("HOME"):match("^/Users/") ~= nil
+	-- return os.getenv("HOME") and os.getenv("HOME"):match("^/Users/") ~= nil
+	return false -- comment out in ghostty
 end
 -- this should check is this a macos device
 if is_macos() then
@@ -53,8 +54,12 @@ vim.api.nvim_set_keymap("v", "<leader>p", '"ap', { noremap = true })
 -- COPY PASTE
 
 -- Diagnostics
-vim.keymap.set("n", "<leader>n", '<cmd>lua vim.diagnostic.goto_next({ float =  { border = "single" }})<cr>')
-vim.api.nvim_set_keymap("n", "<leader>q", '<cmd>lua vim.lsp.buf.code_action({ float = { border = "single" } })<CR>', {})
+vim.keymap.set(
+	"n",
+	"]]",
+	'<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR, float =  { border = "single" }})<cr>'
+)
+vim.api.nvim_set_keymap("n", "}", '<cmd>lua vim.lsp.buf.code_action({ float = { border = "single" } })<CR>', {})
 -- Diagnostics
 
 -- clear highlight after pressing esc

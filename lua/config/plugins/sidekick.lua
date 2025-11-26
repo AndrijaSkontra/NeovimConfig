@@ -9,9 +9,6 @@ return {
 				enabled = true,
 			},
 		},
-		copilot = {
-			enabled = false,
-		},
 	},
 	keys = {
 		{

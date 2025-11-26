@@ -10,12 +10,14 @@ return {
 		input = { enabled = true },
 		-- notifier = { enabled = true },
 		quickfile = { enabled = true },
-		scroll = { enabled = false },
+		scroll = { enabled = false }, -- disabled cus it sucks
 		statuscolumn = { enabled = false }, -- Can't  see diff with on/off with this one
 		words = { enabled = true },
 		-- scratch = {},
 		picker = {},
 		explorer = {},
+		lazygit = {},
+		-- toggle = {},
 		-- dim = { enabled = true }, -- Also can't see diff with this one
 	},
 	keys = {
@@ -47,6 +49,13 @@ return {
 			end,
 			desc = "Buffers",
 		},
+		{
+			"<leader>lg",
+			function()
+				Snacks.lazygit.open()
+			end,
+			desc = "Buffers",
+		},
 		-- {
 		--   "<leader>/",
 		--   function()
@@ -69,7 +78,7 @@ return {
 			desc = "Notification History",
 		},
 		{
-			"<leader>fe",
+			"<leader>e",
 			function()
 				Snacks.explorer()
 			end,

@@ -21,6 +21,10 @@ return {
 			"gruvbox",
 			"vscode",
 			"onedark",
+			"catppuccin-latte",
+			"catppuccin-frappe",
+			"catppuccin-macchiato",
+			"catppuccin-mocha",
 		},
 	},
 	keys = {
