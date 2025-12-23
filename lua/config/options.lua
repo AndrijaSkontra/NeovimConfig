@@ -65,3 +65,7 @@ vim.opt.shiftwidth = 4
 vim.opt.smartindent = true
 
 vim.o.winborder = "single"
+
+vim.opt.linebreak = true
+vim.opt.showbreak = "↪ "
+vim.opt.wrap = true

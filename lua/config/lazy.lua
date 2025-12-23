@@ -48,6 +48,7 @@ require("lazy").setup({
 		require("config.plugins.undotree"),
 		require("config.plugins.which-key"),
 		require("config.plugins.catpuccin"),
+		require("config.plugins.oil"),
 	},
 	checker = { enabled = true },
 })

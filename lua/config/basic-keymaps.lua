@@ -3,6 +3,18 @@ vim.keymap.set("i", "<C-Y>", "<C-X><C-Y><C-X><C-Y>")
 vim.keymap.set("n", "<C-E>", "<C-E><C-E>")
 vim.keymap.set("n", "<C-Y>", "<C-Y><C-Y>")
 
+-- Move through wrapped lines with j/k
+vim.keymap.set("n", "j", "gj", { noremap = true, silent = true })
+vim.keymap.set("n", "k", "gk", { noremap = true, silent = true })
+vim.keymap.set("v", "j", "gj", { noremap = true, silent = true })
+vim.keymap.set("v", "k", "gk", { noremap = true, silent = true })
+
+-- Navigate to beginning/end of wrapped lines
+vim.keymap.set("n", "<S-A-h>", "g0", { noremap = true, silent = true })
+vim.keymap.set("n", "<S-A-l>", "g$", { noremap = true, silent = true })
+vim.keymap.set("v", "<S-A-h>", "g0", { noremap = true, silent = true })
+vim.keymap.set("v", "<S-A-l>", "g$", { noremap = true, silent = true })
+
 -- Navigation between panes/windows
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })

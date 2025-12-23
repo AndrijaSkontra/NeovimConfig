@@ -17,6 +17,6 @@ return {
 	-- },
 	-- oil
 	keys = {
-		{ "<leader>e", "<CMD>Oil<CR>", desc = "Open parent directory" },
+		{ "<leader>;", "<CMD>Oil<CR>", desc = "Open parent directory" },
 	},
 }
