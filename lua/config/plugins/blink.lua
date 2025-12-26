@@ -18,6 +18,11 @@ return {
 		-- (Default) Only show the documentation popup when manually triggered
 		completion = { documentation = { auto_show = true } },
 
+		cmdline = {
+			enabled = true,
+			keymap = { preset = 'inherit' },
+			completion = { menu = { auto_show = true } },
+		},
 		sources = {
 			default = { "lsp", "path", "snippets", "buffer" },
 			providers = {

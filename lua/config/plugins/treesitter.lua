@@ -1,5 +1,6 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
+	branch = "master", -- <-- THE MODIFICATION
 	build = ":TSUpdate",
 	main = "nvim-treesitter.configs",
 	opts = {
