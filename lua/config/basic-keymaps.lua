@@ -66,16 +66,8 @@ vim.api.nvim_set_keymap("v", "<leader>p", '"ap', { noremap = true })
 -- COPY PASTE
 
 -- Diagnostics
-vim.keymap.set(
-	"n",
-	"]]",
-	'<cmd>lua vim.diagnostic.goto_next({ severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARNING }, float =  { border = "single" }})<cr>'
-)
-vim.keymap.set(
-	"n",
-	"[[",
-	'<cmd>lua vim.diagnostic.goto_prev({ severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARNING }, float =  { border = "single" }})<cr>'
-)
+vim.keymap.set("n", "]]", '<cmd>lua vim.diagnostic.goto_next({ float =  { border = "single" } })<cr>')
+vim.keymap.set("n", "[[", '<cmd>lua vim.diagnostic.goto_prev({ float =  { border = "single" }})<cr>')
 vim.api.nvim_set_keymap("n", "g.", '<cmd>lua vim.lsp.buf.code_action({ float = { border = "single" } })<CR>', {})
 -- Diagnostics
 
