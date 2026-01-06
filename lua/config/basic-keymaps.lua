@@ -204,5 +204,5 @@ vim.keymap.set("n", "<leader>tt", "<CMD>terminal<CR>")
 -- 	end
 -- end, {})
 
--- Inc number change because of tmux
-vim.keymap.set("n", "<C-a>", "<C-c>", { noremap = true, silent = true })
+-- Inc number change because of tmux, not using tmux anymore
+-- vim.keymap.set("n", "<C-a>", "<C-c>", { noremap = true, silent = true })

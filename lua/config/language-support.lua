@@ -19,7 +19,7 @@ vim.lsp.enable("ts_ls")
 vim.lsp.enable("prismals")
 -- vim.lsp.enable("clangd")
 vim.lsp.config("html", {
-	filetypes = { "html", "hbs", "handlebars" },
+	filetypes = { "html", "hbs", "handlebars", "heex" },
 })
 vim.lsp.enable("html")
 vim.lsp.enable("htmx")
@@ -37,9 +37,12 @@ vim.lsp.config("tailwindcss", {
 		"svelte",
 		"hbs",
 		"handlebars",
+		"heex",
+		"elixir",
+		"html-eex",
 	},
 })
-vim.lsp.enable("tailwindcss")
+vim.lsp.enable("tailwindcss") -- for this to work tailwind.config.js needs to be in the project root
 -- vim.lsp.enable("astro")
 
 vim.lsp.config("lua_ls", {
