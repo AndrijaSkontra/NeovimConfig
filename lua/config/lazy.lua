@@ -49,6 +49,7 @@ require("lazy").setup({
 		require("config.plugins.which-key"),
 		require("config.plugins.catpuccin"),
 		require("config.plugins.oil"),
+		-- require("config.plugins.opencode"),
 		-- require("config.plugins.copilot"),
 		-- require("config.plugins.supermaven"),
 	},
