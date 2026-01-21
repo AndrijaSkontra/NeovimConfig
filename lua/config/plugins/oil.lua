@@ -10,6 +10,6 @@ return {
 		},
 	},
 	keys = {
-		{ "<leader>;", "<CMD>Oil<CR>", desc = "Open parent directory" },
+		{ "<leader>e", "<CMD>Oil<CR>", desc = "Open parent directory" },
 	},
 }
