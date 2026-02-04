@@ -14,9 +14,11 @@ return {
 				path = "/tmp/" .. basename .. ".99.debug",
 				print_on_error = true,
 			},
+			model = "openai/gpt-5.2-codex",
 
 			--- A new feature that is centered around tags
 			completion = {
+				source = nil,
 				--- Defaults to .cursor/rules
 				-- I am going to disable these until i understand the
 				-- problem better.  Inside of cursor rules there is also
@@ -36,13 +38,13 @@ return {
 				--- {path = "scratch/custom_rules/vim/SKILL.md", name = "vim"},
 				--- ... the other rules in that dir ...
 				---
-				custom_rules = {
-					"scratch/custom_rules/",
-				},
-
-				--- What autocomplete do you use.  We currently only
-				--- support cmp right now
-				source = "blink",
+				-- custom_rules = {
+				-- 	"scratch/custom_rules/",
+				-- },
+				--
+				-- --- What autocomplete do you use.  We currently only
+				-- --- support cmp right now
+				-- source = "cmp",
 			},
 
 			--- WARNING: if you change cwd then this is likely broken
