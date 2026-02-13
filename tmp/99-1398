@@ -1,0 +1,20 @@
+function fizbuz(limit)
+  limit = limit or 100
+  local out = {}
+
+  for i = 1, limit do
+    local fizz = i % 3 == 0
+    local buzz = i % 5 == 0
+    if fizz and buzz then
+      out[#out + 1] = "fizzbuzz"
+    elseif fizz then
+      out[#out + 1] = "fizz"
+    elseif buzz then
+      out[#out + 1] = "buzz"
+    else
+      out[#out + 1] = tostring(i)
+    end
+  end
+
+  return out
+end
