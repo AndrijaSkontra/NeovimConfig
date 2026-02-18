@@ -13,6 +13,7 @@ return {
 			-- lsp_format = "fallback",
 		},
 		formatters_by_ft = {
+			java = { "astyle" },
 			lua = { "stylua" },
 			elixir = { "mix", stop_after_first = true },
 			javascript = getTypescriptFormater(),
