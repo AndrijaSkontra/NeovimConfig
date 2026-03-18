@@ -114,3 +114,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 	end,
 })
+
+vim.lsp.enable("phptools")

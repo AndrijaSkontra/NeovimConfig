@@ -1,14 +1,6 @@
-local function fizbuz()
-  local out = {}
-  for i = 1, 100 do
-    local label = ""
-    if i % 3 == 0 then
-      label = label .. "fizz"
-    end
-    if i % 5 == 0 then
-      label = label .. "buzz"
-    end
-    out[#out + 1] = label ~= "" and label or tostring(i)
-  end
-  return out
-end
+-- Diagnostics
+vim.keymap.set("n", "]]", '<cmd>lua vim.diagnostic.goto_next({ float =  { border = "single" } })<cr>')
+vim.keymap.set("n", "[[", '<cmd>lua vim.diagnostic.goto_prev({ float =  { border = "single" }})<cr>')
+vim.keymap.set("n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "single" })<cr>')
+vim.api.nvim_set_keymap("n", "g.", '<cmd>lua vim.lsp.buf.code_action({ float = { border = "single" } })<CR>', {})
+-- Diagnostics
