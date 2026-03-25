@@ -10,7 +10,7 @@ return {
 		notify_on_error = true,
 		format_on_save = {
 			timeout_ms = 1000,
-			-- lsp_format = "fallback",
+			lsp_format = "fallback",
 		},
 		formatters_by_ft = {
 			java = { "astyle" },
@@ -25,6 +25,7 @@ return {
 			ts = getTypescriptFormater(),
 			tsx = getTypescriptFormater(),
 			handlebars = { "djlint" },
+			php = { "pint", "php_cs_fixer", "phpcbf", stop_after_first = true },
 			-- python = { "ruff" },
 			-- c = { "clang-format" },
 		},
