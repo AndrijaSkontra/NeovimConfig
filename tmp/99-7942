@@ -1,118 +1,27 @@
-# Using Classes in Lua (Prototype-Based)
+Understanding Prompt Instructions: What This Task Does
 
-Lua does not have built-in classes, but you can build class-like behavior with tables, metatables, and the `__index` metamethod. This tutorial shows the common, idiomatic pattern.
+## Overview
+This tutorial explains how to interpret the given task and what it is asking you to do. You will learn how to read the context block, follow the rules, and produce the correct output.
 
-## 1) Methods and `self`
+## 1. Identify the core task
+The prompt is: "what does this do?". The surrounding context changes how you answer. The task is not to answer casually, but to craft a tutorial that explains the behavior of the instruction set you are given.
 
-In Lua, methods are just functions stored in tables. Use the colon (`:`) syntax to automatically pass `self` as the first argument.
+## 2. Parse the Context section
+The Context block tells you to create a tutorial. It also instructs you to read any linked sources before writing. If there are no links, you can proceed without fetching anything.
 
-```lua
-Account = { balance = 0 }
+## 3. Follow formatting rules
+Two formatting rules are mandatory:
 
-function Account:deposit(amount)
-  self.balance = self.balance + amount
-end
+- The output must be valid Markdown.
+- The first line must be the title of the tutorial.
 
-function Account:withdraw(amount)
-  self.balance = self.balance - amount
-end
+This means your response should start with a plain title line, followed by Markdown headings and text.
 
--- Calling with colon passes self automatically
-Account:deposit(100)
-```
+## 4. Respect the output destination
+The instructions specify a temporary output file path. You must write your tutorial to that file and not to any other file. You should not read or modify the output file before writing. If the file already exists, you can overwrite it.
 
-## 2) A “Class” with a `new` Constructor
+## 5. Finish after writing
+Once you write the tutorial to the temporary file, you stop. No extra steps, no additional output, and no further edits.
 
-Use a table as the class and set itself as the metatable for instances. `__index` makes instances inherit fields and methods from the class table.
-
-```lua
-Account = { balance = 0 }
-
-function Account:new(o)
-  o = o or {}
-  setmetatable(o, self)
-  self.__index = self
-  return o
-end
-
-function Account:deposit(amount)
-  self.balance = self.balance + amount
-end
-
-function Account:withdraw(amount)
-  self.balance = self.balance - amount
-end
-
--- Create instances
-a = Account:new{ balance = 0 }
-b = Account:new()
-
-a:deposit(100)
-b:deposit(50)
-```
-
-Why this works:
-
-- `a` and `b` are tables.
-- Their metatable is `Account`.
-- `Account.__index = Account` makes missing fields/methods come from `Account`.
-
-## 3) Class Fields vs Instance Fields
-
-Fields in the class table act as defaults. When you assign to the instance, it shadows the default.
-
-```lua
-print(b.balance)   -- 0 (inherited default)
-b:deposit(25)
-print(b.balance)   -- 25 (now an instance field)
-```
-
-## 4) Inheritance (Subclassing)
-
-Because classes are tables too, you can create a subclass by calling `new` on the base class.
-
-```lua
-SpecialAccount = Account:new()
-
-function SpecialAccount:withdraw(amount)
-  if amount - self.balance > (self.limit or 0) then
-    error("insufficient funds")
-  end
-  self.balance = self.balance - amount
-end
-
--- Instance of SpecialAccount
-s = SpecialAccount:new{ balance = 0, limit = 1000 }
-s:withdraw(200) -- ok
-```
-
-Method lookup chain:
-
-`s` → `SpecialAccount` → `Account`
-
-So `s:deposit(100)` still works, inherited from `Account`.
-
-## 5) A Minimal Pattern to Reuse
-
-```lua
-local Class = {}
-
-function Class:new(o)
-  o = o or {}
-  setmetatable(o, self)
-  self.__index = self
-  return o
-end
-
-return Class
-```
-
-You can copy this and add methods on the returned table to build reusable, class-like structures.
-
-## 6) Key Takeaways
-
-- Lua uses tables and metatables to model objects.
-- `:` is just sugar for passing `self`.
-- A “class” is a table used as a prototype via `__index`.
-- Subclassing is done by creating a new table that inherits from the base class.
-```
+## Summary
+This task instructs you to create a Markdown tutorial explaining the prompt’s behavior, place it in the provided temporary file, and end the session after writing it once.
