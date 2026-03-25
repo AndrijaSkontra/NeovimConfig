@@ -1,0 +1,3 @@
+if check then
+  print("neovim start succesfull")
+end
