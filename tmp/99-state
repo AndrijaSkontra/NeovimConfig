@@ -1,1 +1,0 @@
-{"requests":[{"user_prompt":"for a file that makes changes to lsp","data":{"type":"search","response":"/home/shkoki/.config/nvim/lua/config/language-support.lua:1:1,27,Configures and enables LSP servers","qfix_items":[{"text":"Configures and enables LSP servers","filename":"/home/shkoki/.config/nvim/lua/config/language-support.lua","lnum":1,"col":1}]}}]}

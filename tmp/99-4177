@@ -1,3 +1,0 @@
-		vim.keymap.set({ "n", "v" }, "<leader>9t", function()
-			_99.tutorial()
-		end)
