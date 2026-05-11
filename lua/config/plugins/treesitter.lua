@@ -12,7 +12,6 @@ return {
 				"c",
 				"diff",
 				"html",
-				"lua",
 				"luadoc",
 				"typescript",
 				"toml",
