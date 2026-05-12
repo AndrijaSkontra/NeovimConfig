@@ -1,9 +1,8 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	branch = "main",
 	build = ":TSUpdate",
 	config = function()
-		require("nvim-treesitter").install({
+		require("nvim-treesitter.configs").setup({
 			ensure_installed = {
 				"bash",
 				"glimmer_javascript",
@@ -23,6 +22,7 @@ return {
 				"markdown",
 				"markdown_inline",
 			},
+			highlight = { enable = true },
 		})
 		vim.treesitter.language.register("markdown", "markdown")
 	end,

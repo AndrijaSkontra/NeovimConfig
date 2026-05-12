@@ -15,7 +15,7 @@ return {
 				path = "/tmp/" .. basename .. ".99.debug",
 				print_on_error = true,
 			},
-			model = "opencode-go/kimi-k2.6",
+			model = "openai/gpt-5.3-codex-spark",
 			-- When setting this to something that is not inside the CWD tools
 			-- such as claude code or opencode will have permission issues
 			-- and generation will fail refer to tool documentation to resolve
