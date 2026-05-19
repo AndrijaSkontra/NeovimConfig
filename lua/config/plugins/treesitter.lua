@@ -5,6 +5,7 @@ return {
 	config = function()
 		local languages = {
 			"bash",
+			"javascript",
 			"glimmer_javascript",
 			"json",
 			"css",
@@ -13,6 +14,7 @@ return {
 			"html",
 			"luadoc",
 			"typescript",
+			"tsx",
 			"toml",
 			"elixir",
 			"eex",

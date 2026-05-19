@@ -5,6 +5,12 @@ vim.lsp.config("denols", {
 vim.lsp.config("ts_ls", {
 	root_markers = { "tsconfig.json", "jsconfig.json", "package.json" },
 	workspace_required = true,
+	filetypes = {
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+	},
 })
 -- vim.lsp.config("htmx", {
 -- 	filetypes = {
