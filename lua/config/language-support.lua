@@ -122,3 +122,34 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 vim.lsp.enable("phptools")
+
+-- Snippet to enable the language server: >lua
+vim.lsp.config("ruby_lsp", {
+	filetypes = { "ruby" },
+	cmd = { "ruby-lsp" },
+	root_markers = { "Gemfile", ".git" },
+	init_options = {
+		formatter = "standard",
+		linters = { "standard" },
+		addonSettings = {
+			["Ruby LSP Rails"] = {
+				enablePendingMigrationsPrompt = false,
+			},
+		},
+	},
+})
+vim.lsp.enable("ruby_lsp")
+-- vim.lsp.enable("ruby_lsp")
+
+-- Default config:
+-- - cmd (use "gF" to view): ../lsp/ruby_lsp.lua:16
+-- - filetypes: >lua
+--   { "ruby", "eruby" }
+-- - init_options: >lua
+--   {
+--     formatter = "auto"
+--   }
+-- - reuse_client (use "gF" to view): ../lsp/ruby_lsp.lua:16
+-- - root_markers: >lua
+--   { "Gemfile", ".git" }
+--
