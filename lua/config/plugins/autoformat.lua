@@ -15,6 +15,7 @@ return {
 		formatters_by_ft = {
 			java = { "astyle" },
 			lua = { "stylua" },
+			ruby = { "standardrb" },
 			elixir = { "mix", stop_after_first = true },
 			javascript = getTypescriptFormater(),
 			javascriptreact = getTypescriptFormater(),
