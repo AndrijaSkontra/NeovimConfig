@@ -49,6 +49,16 @@ vim.diagnostic.config({
 	underline = true,
 	update_in_insert = false,
 	severity_sort = true,
+	jump = {
+		on_jump = function(_, bufnr)
+			vim.diagnostic.open_float({
+				bufnr = bufnr,
+				border = "single",
+				focus = false,
+				scope = "line",
+			})
+		end,
+	},
 
 	-- virtual_lines = {
 	--   current_line = true,
