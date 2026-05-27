@@ -102,6 +102,13 @@ vim.lsp.config("lua_ls", {
 
 vim.lsp.enable("lua_ls")
 
+vim.lsp.config("gopls", {
+	cmd = { "gopls" },
+	filetypes = { "go", "gomod", "gowork", "gotmpl" },
+	root_markers = { "go.work", "go.mod", ".git" },
+})
+vim.lsp.enable("gopls")
+
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(event)
 		local map = function(keys, func, desc)

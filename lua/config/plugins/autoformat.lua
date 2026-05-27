@@ -15,6 +15,10 @@ return {
 			}
 		end,
 		formatters_by_ft = {
+			go = { lsp_format = "first" },
+			gomod = { lsp_format = "first" },
+			gowork = { lsp_format = "first" },
+			gotmpl = { lsp_format = "first" },
 			java = { "astyle" },
 			lua = { "stylua" },
 			ruby = { "standardrb" },
