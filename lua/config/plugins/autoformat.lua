@@ -8,10 +8,12 @@ return {
 	lazy = false,
 	opts = {
 		notify_on_error = true,
-		format_on_save = {
-			timeout_ms = 1000,
-			lsp_format = "fallback",
-		},
+		format_on_save = function(bufnr)
+			return {
+				timeout_ms = vim.bo[bufnr].filetype == "ruby" and 10000 or 1000,
+				lsp_format = "fallback",
+			}
+		end,
 		formatters_by_ft = {
 			java = { "astyle" },
 			lua = { "stylua" },
