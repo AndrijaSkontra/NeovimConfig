@@ -1,6 +1,9 @@
 return {
 	"chrisgrieser/nvim-scissors",
-	dependencies = "nvim-telescope/telescope.nvim",
+	lazy = true,
+	dependencies = {
+		{ "nvim-telescope/telescope.nvim", lazy = true },
+	},
 	opts = {
 		snippetDir = "~/.config/nvim/lua/snippets",
 	},

@@ -1,13 +1,6 @@
 return {
-	"XXiaoA/atone.nvim",
-	cmd = "Atone",
-	opts = {}, -- your configuration here
+	"mbbill/undotree",
 	keys = {
-		{
-			"<leader>u",
-			"<cmd>Atone<cr>",
-			mode = { "n", "x" },
-			desc = "undo history",
-		},
+		{ "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "Undo tree" },
 	},
 }

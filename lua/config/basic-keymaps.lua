@@ -101,126 +101,18 @@ vim.api.nvim_set_keymap(
 	{ noremap = true, silent = true, desc = "Remove // comments" }
 )
 
-local command_pane_winid = nil
-local command_pane_bufnr = nil
-
-local function run_project_command(mode)
-	-- save current file
-	vim.cmd("w")
-
-	local command_file = ".command"
-	if vim.fn.filereadable(command_file) == 0 then
-		print("No .command file found in current directory")
-		return
-	end
-
-	local file = io.open(command_file, "r")
-	if not file then
-		print("Could not open .command file")
-		return
-	end
-
-	local command = file:read("*line")
-	file:close()
-
-	command = command and command:match("^%s*(.-)%s*$") or ""
-	if command == "" then
-		print(".command file is empty")
-		return
-	end
-
-	-- close previous pane if it still exists
-	if command_pane_winid and vim.api.nvim_win_is_valid(command_pane_winid) then
-		vim.api.nvim_win_close(command_pane_winid, false)
-		command_pane_winid = nil
-		command_pane_bufnr = nil
-	end
-
-	-- create split
-	if mode == "vertical" then
-		vim.cmd("vsplit")
-		vim.cmd("wincmd l")
-	elseif mode == "horizontal" then
-		vim.cmd("split")
-		vim.cmd("wincmd j")
-	end
-
-	command_pane_winid = vim.api.nvim_get_current_win()
-
-	-- create scratch buffer
-	local buf = vim.api.nvim_create_buf(false, true)
-	command_pane_bufnr = buf
-
-	vim.api.nvim_win_set_buf(command_pane_winid, buf)
-
-	-- buffer options
-	vim.bo[buf].buftype = "nofile"
-	vim.bo[buf].bufhidden = "wipe"
-	vim.bo[buf].swapfile = false
-	vim.bo[buf].modifiable = true
-	vim.bo[buf].filetype = "log"
-
-	vim.api.nvim_buf_set_lines(buf, 0, -1, false, {
-		"$ " .. command,
-		"",
-	})
-
-	local function append_data(_, data)
-		if not data or (#data == 1 and data[1] == "") then
-			return
-		end
-
-		if vim.api.nvim_buf_is_valid(buf) then
-			vim.schedule(function()
-				if vim.api.nvim_buf_is_valid(buf) then
-					vim.api.nvim_buf_set_lines(buf, -1, -1, false, data)
-				end
-			end)
-		end
-	end
-
-	vim.fn.jobstart(command, {
-		stdout_buffered = false,
-		stderr_buffered = false,
-		on_stdout = append_data,
-		on_stderr = append_data,
-		on_exit = function(_, code)
-			if vim.api.nvim_buf_is_valid(buf) then
-				vim.schedule(function()
-					if vim.api.nvim_buf_is_valid(buf) then
-						vim.api.nvim_buf_set_lines(buf, -1, -1, false, {
-							"",
-							"[Process exited with code " .. code .. "]",
-						})
-						vim.bo[buf].modifiable = false
-					end
-				end)
-			end
-		end,
-	})
-
-	vim.api.nvim_create_autocmd("WinClosed", {
-		pattern = tostring(command_pane_winid),
-		callback = function()
-			if command_pane_winid == tonumber(vim.fn.expand("<amatch>")) then
-				command_pane_winid = nil
-				command_pane_bufnr = nil
-			end
-		end,
-		once = true,
-	})
-end
+local project_command = require("config.helpers.project-command")
 
 -- Create the keymap
 vim.keymap.set("n", "<leader>!", function()
-	run_project_command("vertical")
+	project_command.run("vertical")
 end, {
 	desc = "Toggle command pane from .command file in vertical split",
 	silent = true,
 })
 
 vim.keymap.set("n", "<leader>=", function()
-	run_project_command("horizontal")
+	project_command.run("horizontal")
 end, {
 	desc = "Toggle command pane from .command file in horizontal split",
 	silent = true,
@@ -235,3 +127,5 @@ vim.keymap.set("n", "<leader>tt", "<CMD>terminal<CR>")
 
 -- Inc number change because of tmux, not using tmux anymore
 -- vim.keymap.set("n", "<C-a>", "<C-c>", { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>e", vim.cmd.Ex)

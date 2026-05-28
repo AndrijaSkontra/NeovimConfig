@@ -1,7 +1,6 @@
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
-	lazy = false,
 	---@type snacks.Config
 	opts = {
 		bigfile = { enabled = true },
@@ -15,7 +14,7 @@ return {
 		words = { enabled = true },
 		-- scratch = {},
 		picker = {},
-		explorer = {},
+		-- explorer = {},
 		lazygit = {},
 		-- toggle = {},
 		-- dim = { enabled = true }, -- Also can't see diff with this one
@@ -78,7 +77,7 @@ return {
 			desc = "Notification History",
 		},
 		{
-			"<leader>;",
+			"<leader>pv",
 			function()
 				Snacks.explorer()
 			end,

@@ -1,4 +1,4 @@
-brew install tailwindcss-language-server
+npm install tailwindcss-language-server
 npm install -g @prisma/language-server
 sudo pacman -S astyle
 npm install -g devsense-php-ls

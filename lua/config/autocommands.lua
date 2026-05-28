@@ -7,15 +7,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
--- Don't show lazy window on nvim enter (of updates)
-vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function()
-		require("lazy").update({
-			show = false,
-		})
-	end,
-})
-
 -- Makes sure that vim help file will take the whole screen
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "help",
@@ -28,7 +19,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- to sort tailwind classes
 -- vim.cmd("TailwindSort")
---
+
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = "*.note",
 	callback = function()
@@ -36,27 +27,21 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	end,
 })
 
--- copilot lsp attach
--- vim.api.nvim_create_autocmd("LspAttach", {
--- 	callback = function(args)
--- 		local bufnr = args.buf
--- 		local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
---
--- 		if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
--- 			vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
---
--- 			vim.keymap.set(
--- 				"i",
--- 				"<C-F>",
--- 				vim.lsp.inline_completion.get,
--- 				{ desc = "LSP: accept inline completion", buffer = bufnr }
--- 			)
--- 			vim.keymap.set(
--- 				"i",
--- 				"<C-G>",
--- 				vim.lsp.inline_completion.select,
--- 				{ desc = "LSP: switch inline completion", buffer = bufnr }
--- 			)
--- 		end
--- 	end,
--- })
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(event)
+		local map = function(keys, func, desc)
+			vim.keymap.set("n", keys, func, {
+				buffer = event.buf,
+				desc = "LSP: " .. desc,
+			})
+		end
+		map("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+		map("gh", vim.lsp.buf.references, "[G]oto [R]eferences")
+		map("gi", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+		map("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
+		map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+		-- map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+		map("K", vim.lsp.buf.hover, "Hover Documentation")
+		map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+	end,
+})
