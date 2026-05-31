@@ -66,6 +66,7 @@ vim.api.nvim_set_keymap("v", "<leader>p", '"ap', { noremap = true })
 -- COPY PASTE
 
 vim.keymap.set("n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "single" })<cr>')
+vim.keymap.set("n", "<leader>d", "]d", { desc = "Go to next diagnostic" })
 vim.api.nvim_set_keymap("n", "g.", '<cmd>lua vim.lsp.buf.code_action({ float = { border = "single" } })<CR>', {})
 -- Diagnostics
 
@@ -77,7 +78,6 @@ vim.api.nvim_set_keymap("n", "%", "%zz", { noremap = true, silent = true })
 
 -- comment jsx or tsx
 vim.keymap.set("n", "<leader>cc", "_i{/*<Space><Esc>$a<Space>*/}<Esc>", { desc = "Comment JSX" })
-vim.keymap.set("n", "<leader>dc", "_xxxx$xxxx", { desc = "Comment JSX" })
 
 -- copy whole file
 vim.api.nvim_set_keymap("n", "<leader>cf", "ggVGy", { noremap = true })
