@@ -50,6 +50,7 @@ require("lazy").setup({
 		require("config.plugins.99"),
 		require("config.plugins.toggleterm"),
 		require("config.plugins.undotree"),
+		require("config.plugins.neocodium"),
 	},
 	checker = { enabled = true },
 })

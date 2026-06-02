@@ -16,6 +16,7 @@
   "melange-nvim": { "branch": "master", "commit": "ce42f6b629beeaa00591ba73a77d3eeac4cf28ce" },
   "mini.nvim": { "branch": "main", "commit": "15abccbe23525ee0502d2efe620c77db00bfb93c" },
   "multicursor.nvim": { "branch": "1.0", "commit": "704b99f10a72cc05d370cfeb294ff83412a8ab55" },
+  "neocodeium": { "branch": "main", "commit": "a1f73887af6cc4b09cb15cc96e0b72d7932552a5" },
   "neovim": { "branch": "main", "commit": "ff483051a47e27d84bdef47703538df1ed9f4a47" },
   "nvim-autopairs": { "branch": "master", "commit": "7b9923abad60b903ece7c52940e1321d39eccc79" },
   "nvim-lspconfig": { "branch": "master", "commit": "6f76a3eeadc2ee235d74cd7d5319e95a261084af" },
