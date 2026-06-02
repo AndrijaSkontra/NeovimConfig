@@ -11,7 +11,12 @@ return {
 	---@module 'blink.cmp'
 	---@type blink.cmp.Config
 	opts = {
-		keymap = { preset = "default" },
+		keymap = {
+			preset = "default",
+			["<CR>"] = { "accept", "fallback" },
+			["<Up>"] = { "select_prev", "fallback" },
+			["<Down>"] = { "select_next", "fallback" },
+		},
 
 		appearance = {
 			nerd_font_variant = "normal",
@@ -22,7 +27,10 @@ return {
 
 		cmdline = {
 			enabled = true,
-			keymap = { preset = 'inherit' },
+			keymap = {
+				preset = "inherit",
+				["<CR>"] = { "fallback" },
+			},
 			completion = { menu = { auto_show = true } },
 		},
 		sources = {

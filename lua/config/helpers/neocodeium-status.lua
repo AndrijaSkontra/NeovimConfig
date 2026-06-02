@@ -27,7 +27,7 @@ function M.is_enabled()
 end
 
 function M.label()
-	return "AI assist: " .. (M.is_enabled() and "ON" or "OFF")
+	return "Clanker: " .. (M.is_enabled() and "ON" or "OFF")
 end
 
 function M.color()
