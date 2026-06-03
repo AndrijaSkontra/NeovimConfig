@@ -76,13 +76,13 @@ return {
 			end,
 			desc = "Notification History",
 		},
-		{
-			"<leader>pv",
-			function()
-				Snacks.explorer()
-			end,
-			desc = "File Explorer",
-		},
+		-- {
+		-- 	"<leader>pv",
+		-- 	function()
+		-- 		Snacks.explorer()
+		-- 	end,
+		-- 	desc = "File Explorer",
+		-- },
 		{
 			"<leader>fb",
 			function()
