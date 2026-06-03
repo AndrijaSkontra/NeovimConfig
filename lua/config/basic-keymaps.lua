@@ -66,8 +66,14 @@ vim.api.nvim_set_keymap("v", "<leader>p", '"ap', { noremap = true })
 -- COPY PASTE
 
 vim.keymap.set("n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "single" })<cr>')
-vim.keymap.set("n", "<leader>d", "]d", { desc = "Go to next diagnostic" })
+vim.keymap.set("n", "<leader>d", function()
+	vim.diagnostic.jump({ count = 1 })
+end, { desc = "Go to next diagnostic" })
+vim.keymap.set("n", "<leader><leader>", function()
+	vim.diagnostic.jump({ count = 1 })
+end, { desc = "Go to next diagnostic" })
 vim.api.nvim_set_keymap("n", "g.", '<cmd>lua vim.lsp.buf.code_action({ float = { border = "single" } })<CR>', {})
+
 -- Diagnostics
 
 -- clear highlight after pressing esc
