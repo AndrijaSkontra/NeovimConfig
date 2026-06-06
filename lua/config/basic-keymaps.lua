@@ -88,6 +88,8 @@ vim.keymap.set("n", "<leader>cc", "_i{/*<Space><Esc>$a<Space>*/}<Esc>", { desc =
 -- copy whole file
 vim.api.nvim_set_keymap("n", "<leader>cf", "ggVGy", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>w", "<cmd>w<CR>", { noremap = true })
+vim.cmd("packadd nvim.undotree")
+vim.keymap.set("n", "<leader>u", "<cmd>Undotree<CR>", { desc = "Undo tree" })
 
 function Git_log_visual_selection()
 	print("hello")
