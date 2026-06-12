@@ -15,6 +15,6 @@ return {
 		local neocodeium = require("neocodeium")
 		neocodeium.setup({ enabled = neocodeium_status.saved_enabled() })
 		neocodeium_status.enable_persistence()
-		vim.keymap.set("i", "<Tab>", neocodeium.accept)
+		vim.keymap.set("i", "<C-i>", neocodeium.accept)
 	end,
 }
