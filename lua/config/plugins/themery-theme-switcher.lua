@@ -1,32 +1,14 @@
 return {
 	"zaldih/themery.nvim",
 	lazy = false,
-	opts = {
-		themes = {
-			"alabaster",
-			"rose-pine-moon",
-			"rose-pine-main",
-			"rose-pine-dawn",
-			"github_light",
-			"tokyonight",
-			"melange",
-			"github_dark",
-			"kanagawa-wave",
-			"kanagawa-dragon",
-			"kanagawa-lotus",
-			"tokyonight-night",
-			"tokyonight-storm",
-			"tokyonight-day",
-			"tokyonight-moon",
-			"gruvbox",
-			"vscode",
-			"onedark",
-			"catppuccin-latte",
-			"catppuccin-frappe",
-			"catppuccin-macchiato",
-			"catppuccin-mocha",
-		},
-	},
+	init = function()
+		require("config.helpers.omarchy-theme-sync").setup_autosync()
+	end,
+	opts = function()
+		return {
+			themes = require("config.helpers.omarchy-theme-sync").themery_entries(),
+		}
+	end,
 	keys = {
 		{ "<leader>th", "<CMD>Themery<CR>", desc = "Change theme" },
 	},
