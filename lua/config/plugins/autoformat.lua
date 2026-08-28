@@ -10,9 +10,11 @@ return {
 	opts = {
 		notify_on_error = true,
 		format_on_save = function(bufnr)
+			local ft = vim.bo[bufnr].filetype
 			return {
-				timeout_ms = vim.bo[bufnr].filetype == "ruby" and 10000 or 1000,
-				lsp_format = "fallback",
+				timeout_ms = ft == "ruby" and 10000 or 1000,
+				-- sqls formatting is non-idempotent and flips style on each save
+				lsp_format = ft == "sql" and "never" or "fallback",
 			}
 		end,
 		formatters_by_ft = {

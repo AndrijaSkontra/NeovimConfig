@@ -23,6 +23,7 @@ return {
 			"regex",
 			"markdown",
 			"markdown_inline",
+			"sql",
 		}
 
 		require("nvim-treesitter").setup({})

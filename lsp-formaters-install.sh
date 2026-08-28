@@ -4,4 +4,5 @@ sudo pacman -S astyle
 npm install -g devsense-php-ls
 npm install -g typescript-language-server typescript
 gem install ruby-lsp
+go install github.com/sqls-server/sqls@latest
 # todo rest and for each system installing

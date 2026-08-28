@@ -13,7 +13,8 @@ return {
 	opts = {
 		keymap = {
 			preset = "default",
-			["<CR>"] = { "accept", "fallback" },
+			["<C-y>"] = { "select_and_accept", "fallback" },
+			["<CR>"] = { "fallback" },
 			["<Up>"] = { "select_prev", "fallback" },
 			["<Down>"] = { "select_next", "fallback" },
 		},

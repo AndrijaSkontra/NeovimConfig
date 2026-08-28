@@ -1,30 +1,33 @@
 local M = {}
 
 local state_file = vim.fn.stdpath("state") .. "/omarchy-theme-sync"
+local system_themes_dir = "/usr/share/omarchy/themes"
+local user_themes_dir = vim.fn.expand("~/.config/omarchy/themes")
+local active_slug = nil
 
 local themes = {
-	["catppuccin"] = { label = "Catppuccin", colorscheme = "catppuccin-mocha", background = "dark" },
-	["catppuccin-latte"] = { label = "Catppuccin Latte", colorscheme = "catppuccin-latte", background = "light" },
-	["ethereal"] = { label = "Ethereal", colorscheme = "tokyonight-moon", background = "dark" },
-	["everforest"] = { label = "Everforest", colorscheme = "everforest", background = "dark" },
-	["flexoki-light"] = { label = "Flexoki Light", colorscheme = "flexoki-light", background = "light" },
-	["gruvbox"] = { label = "Gruvbox", colorscheme = "gruvbox", background = "dark" },
-	["hackerman"] = { label = "Hackerman", colorscheme = "hackerman", background = "dark" },
-	["kanagawa"] = { label = "Kanagawa", colorscheme = "kanagawa", background = "dark" },
-	["last-horizon"] = { label = "Last Horizon", colorscheme = "rose-pine-main", background = "dark" },
-	["lumon"] = { label = "Lumon", colorscheme = "lumon", background = "dark" },
-	["lupine"] = { label = "Lupine", colorscheme = "rose-pine-dawn", background = "light" },
-	["matte-black"] = { label = "Matte Black", colorscheme = "matteblack", background = "dark" },
-	["miasma"] = { label = "Miasma", colorscheme = "melange", background = "dark" },
-	["nord"] = { label = "Nord", colorscheme = "nordfox", background = "dark" },
-	["osaka-jade"] = { label = "Osaka Jade", colorscheme = "bamboo", background = "dark" },
-	["retro-82"] = { label = "Retro 82", colorscheme = "retro-82", background = "dark" },
-	["ristretto"] = { label = "Ristretto", colorscheme = "catppuccin-macchiato", background = "dark" },
-	["rose-pine"] = { label = "Rose Pine", colorscheme = "rose-pine-dawn", background = "light" },
-	["solitude"] = { label = "Solitude", colorscheme = "ashen", background = "dark" },
-	["tokyo-night"] = { label = "Tokyo Night", colorscheme = "tokyonight-night", background = "dark" },
-	["vantablack"] = { label = "Vantablack", colorscheme = "matteblack", background = "dark" },
-	["white"] = { label = "White", colorscheme = "github_light", background = "light" },
+	["catppuccin"] = { label = "Catppuccin" },
+	["catppuccin-latte"] = { label = "Catppuccin Latte" },
+	["ethereal"] = { label = "Ethereal" },
+	["everforest"] = { label = "Everforest" },
+	["flexoki-light"] = { label = "Flexoki Light" },
+	["gruvbox"] = { label = "Gruvbox" },
+	["hackerman"] = { label = "Hackerman" },
+	["kanagawa"] = { label = "Kanagawa" },
+	["last-horizon"] = { label = "Last Horizon" },
+	["lumon"] = { label = "Lumon" },
+	["lupine"] = { label = "Lupine" },
+	["matte-black"] = { label = "Matte Black" },
+	["miasma"] = { label = "Miasma" },
+	["nord"] = { label = "Nord" },
+	["osaka-jade"] = { label = "Osaka Jade" },
+	["retro-82"] = { label = "Retro 82" },
+	["ristretto"] = { label = "Ristretto" },
+	["rose-pine"] = { label = "Rose Pine" },
+	["solitude"] = { label = "Solitude" },
+	["tokyo-night"] = { label = "Tokyo Night" },
+	["vantablack"] = { label = "Vantablack" },
+	["white"] = { label = "White" },
 }
 
 local ordered_slugs = {
@@ -89,17 +92,64 @@ local function resolve_slug(value)
 	return nil
 end
 
+local function parse_toml_palette(path)
+	local palette = {}
+	for _, line in ipairs(vim.fn.readfile(path)) do
+		local key, value = line:match('^%s*([%w_]+)%s*=%s*"(.-)"%s*$')
+		if key and value then
+			palette[key] = value
+		end
+	end
+	return palette
+end
+
+local function theme_palette_path(slug)
+	local user_path = user_themes_dir .. "/" .. slug .. "/colors.toml"
+	if vim.fn.filereadable(user_path) == 1 then
+		return user_path
+	end
+
+	local system_path = system_themes_dir .. "/" .. slug .. "/colors.toml"
+	if vim.fn.filereadable(system_path) == 1 then
+		return system_path
+	end
+
+	return nil
+end
+
+function M.theme_palette(slug)
+	local path = theme_palette_path(slug)
+	if not path then
+		return nil
+	end
+
+	local palette = parse_toml_palette(path)
+	if not palette.mode then
+		palette.mode = "dark"
+	end
+	palette.slug = slug
+	return palette
+end
+
+function M.set_active_theme(slug)
+	if themes[slug] then
+		active_slug = slug
+	end
+end
+
+function M.get_active_theme()
+	return active_slug
+end
+
 function M.apply_omarchy_slug(slug)
-	local spec = themes[slug]
-	if not spec then
+	if not themes[slug] then
 		return false
 	end
 
-	vim.opt.background = spec.background
-
-	local ok = pcall(vim.cmd.colorscheme, spec.colorscheme)
+	active_slug = slug
+	local ok = pcall(vim.cmd.colorscheme, "omarchy-sync")
 	if not ok then
-		vim.notify("Failed to apply colorscheme: " .. spec.colorscheme, vim.log.levels.WARN)
+		vim.notify("Failed to apply colorscheme for Omarchy theme: " .. slug, vim.log.levels.WARN)
 		return false
 	end
 
@@ -131,11 +181,8 @@ function M.themery_entries()
 		local spec = themes[slug]
 		entries[#entries + 1] = {
 			name = "Omarchy: " .. spec.label,
-			colorscheme = spec.colorscheme,
-			before = ([[vim.opt.background = %q
-if %q == "everforest" then
-	vim.g.everforest_background = "soft"
-end]]):format(spec.background, slug),
+			colorscheme = "omarchy-sync",
+			before = ([[require("config.helpers.omarchy-theme-sync").set_active_theme(%q)]]):format(slug),
 		}
 	end
 	return entries
