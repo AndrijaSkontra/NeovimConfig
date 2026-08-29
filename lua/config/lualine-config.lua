@@ -2,7 +2,7 @@ local lualine = require("lualine")
 local neocodeium_status = require("config.helpers.neocodeium-status")
 
 lualine.setup({
-	options = { theme = "onedark" },
+	options = { theme = "auto" },
 	sections = {
 		lualine_x = {
 			{

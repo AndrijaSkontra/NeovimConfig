@@ -73,6 +73,15 @@ local function read_state()
 	return lines[1]
 end
 
+local function sync_lualine()
+	vim.schedule(function()
+		local ok, lualine = pcall(require, "lualine")
+		if ok then
+			lualine.setup()
+		end
+	end)
+end
+
 local function resolve_slug(value)
 	if not value or value == "" then
 		return nil
@@ -154,6 +163,7 @@ function M.apply_omarchy_slug(slug)
 	end
 
 	write_state(slug)
+	sync_lualine()
 	return true
 end
 
@@ -188,37 +198,47 @@ function M.themery_entries()
 	return entries
 end
 
+local function fetch_omarchy_slug()
+	if vim.fn.executable("omarchy") ~= 1 then
+		return nil
+	end
+
+	local lines = vim.fn.systemlist({ "omarchy", "theme", "current" })
+	if vim.v.shell_error ~= 0 or #lines == 0 then
+		return nil
+	end
+
+	return resolve_slug(lines[1])
+end
+
 function M.setup_autosync()
 	local group = vim.api.nvim_create_augroup("omarchy-theme-sync", { clear = true })
-	local last_state = nil
+	local last_slug = nil
+
+	local function apply_slug(slug)
+		if not slug or slug == last_slug then
+			return
+		end
+
+		if M.apply_omarchy_slug(slug) then
+			last_slug = slug
+		end
+	end
 
 	vim.api.nvim_create_autocmd({ "VimEnter", "FocusGained", "CursorHold" }, {
 		group = group,
 		callback = function(args)
-			local state = read_state()
-			if args.event == "VimEnter" then
-				if state and state ~= "" then
-					local slug = resolve_slug(state)
-					if slug then
-						M.apply_omarchy_slug(slug)
-						last_state = slug
-						return
-					end
+			if args.event == "VimEnter" or args.event == "FocusGained" then
+				local slug = fetch_omarchy_slug()
+				if not slug and args.event == "VimEnter" then
+					slug = resolve_slug(read_state())
 				end
-
-				if M.apply_current_omarchy_theme() then
-					last_state = read_state()
-				end
+				apply_slug(slug)
 				return
 			end
 
-			if state and state ~= "" and state ~= last_state then
-				local slug = resolve_slug(state)
-				if slug then
-					M.apply_omarchy_slug(slug)
-					last_state = slug
-				end
-			end
+			local slug = resolve_slug(read_state())
+			apply_slug(slug)
 		end,
 	})
 end
