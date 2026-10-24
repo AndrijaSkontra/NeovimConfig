@@ -8,6 +8,7 @@ local active_slug = nil
 local themes = {
 	["catppuccin"] = { label = "Catppuccin" },
 	["catppuccin-latte"] = { label = "Catppuccin Latte" },
+	["circuit-horizon"] = { label = "Circuit Horizon" },
 	["ethereal"] = { label = "Ethereal" },
 	["everforest"] = { label = "Everforest" },
 	["flexoki-light"] = { label = "Flexoki Light" },
@@ -25,6 +26,7 @@ local themes = {
 	["ristretto"] = { label = "Ristretto" },
 	["rose-pine"] = { label = "Rose Pine" },
 	["solitude"] = { label = "Solitude" },
+	["space-4k"] = { label = "Space 4k" },
 	["tokyo-night"] = { label = "Tokyo Night" },
 	["vantablack"] = { label = "Vantablack" },
 	["white"] = { label = "White" },
@@ -33,6 +35,7 @@ local themes = {
 local ordered_slugs = {
 	"catppuccin",
 	"catppuccin-latte",
+	"circuit-horizon",
 	"ethereal",
 	"everforest",
 	"flexoki-light",
@@ -50,6 +53,7 @@ local ordered_slugs = {
 	"ristretto",
 	"rose-pine",
 	"solitude",
+	"space-4k",
 	"tokyo-night",
 	"vantablack",
 	"white",
@@ -82,13 +86,33 @@ local function sync_lualine()
 	end)
 end
 
+local function theme_palette_path(slug)
+	local user_path = user_themes_dir .. "/" .. slug .. "/colors.toml"
+	if vim.fn.filereadable(user_path) == 1 then
+		return user_path
+	end
+
+	local system_path = system_themes_dir .. "/" .. slug .. "/colors.toml"
+	if vim.fn.filereadable(system_path) == 1 then
+		return system_path
+	end
+
+	return nil
+end
+
+local function label_from_slug(slug)
+	return (slug:gsub("%-", " "):gsub("(%a)([%w]*)", function(first, rest)
+		return first:upper() .. rest
+	end))
+end
+
 local function resolve_slug(value)
 	if not value or value == "" then
 		return nil
 	end
 
 	local normalized = normalize(value)
-	if themes[normalized] then
+	if themes[normalized] or theme_palette_path(normalized) then
 		return normalized
 	end
 
@@ -112,20 +136,6 @@ local function parse_toml_palette(path)
 	return palette
 end
 
-local function theme_palette_path(slug)
-	local user_path = user_themes_dir .. "/" .. slug .. "/colors.toml"
-	if vim.fn.filereadable(user_path) == 1 then
-		return user_path
-	end
-
-	local system_path = system_themes_dir .. "/" .. slug .. "/colors.toml"
-	if vim.fn.filereadable(system_path) == 1 then
-		return system_path
-	end
-
-	return nil
-end
-
 function M.theme_palette(slug)
 	local path = theme_palette_path(slug)
 	if not path then
@@ -141,7 +151,7 @@ function M.theme_palette(slug)
 end
 
 function M.set_active_theme(slug)
-	if themes[slug] then
+	if themes[slug] or theme_palette_path(slug) then
 		active_slug = slug
 	end
 end
@@ -151,7 +161,7 @@ function M.get_active_theme()
 end
 
 function M.apply_omarchy_slug(slug)
-	if not themes[slug] then
+	if not themes[slug] and not theme_palette_path(slug) then
 		return false
 	end
 
@@ -186,15 +196,32 @@ function M.apply_current_omarchy_theme()
 end
 
 function M.themery_entries()
+	local seen = {}
 	local entries = {}
-	for _, slug in ipairs(ordered_slugs) do
-		local spec = themes[slug]
+
+	local function add(slug)
+		if seen[slug] or not theme_palette_path(slug) then
+			return
+		end
+		seen[slug] = true
+		local label = themes[slug] and themes[slug].label or label_from_slug(slug)
 		entries[#entries + 1] = {
-			name = "Omarchy: " .. spec.label,
+			name = "Omarchy: " .. label,
 			colorscheme = "omarchy-sync",
 			before = ([[require("config.helpers.omarchy-theme-sync").set_active_theme(%q)]]):format(slug),
 		}
 	end
+
+	for _, slug in ipairs(ordered_slugs) do
+		add(slug)
+	end
+
+	for _, dir in ipairs({ user_themes_dir, system_themes_dir }) do
+		for _, path in ipairs(vim.fn.glob(dir .. "/*/colors.toml", false, true)) do
+			add(vim.fn.fnamemodify(path, ":h:t"))
+		end
+	end
+
 	return entries
 end
 
