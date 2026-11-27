@@ -32,24 +32,27 @@ local function is_macos()
 	return false -- comment out in ghostty
 end
 -- this should check is this a macos device
+-- noremap so `gj`/`zz` are builtins. which-key binds `g` and `z` as prefixes,
+-- and a recursive `12jzz` re-enters those prefixes on every key repeat.
+local scroll_opts = { noremap = true, silent = true }
 if is_macos() then
-	vim.api.nvim_set_keymap("n", "∆", "12jzz", {})
-	vim.api.nvim_set_keymap("n", "˚", "12kzz", {})
-	vim.api.nvim_set_keymap("v", "∆", "<C-d>zz", {})
-	vim.api.nvim_set_keymap("v", "˚", "<C-u>zz", {})
-	vim.api.nvim_set_keymap("n", "˙", "_", {})
-	vim.api.nvim_set_keymap("n", "¬", "$", {})
-	vim.api.nvim_set_keymap("v", "˙", "_", {})
-	vim.api.nvim_set_keymap("v", "¬", "$", {})
+	vim.api.nvim_set_keymap("n", "∆", "12gjzz", scroll_opts)
+	vim.api.nvim_set_keymap("n", "˚", "12gkzz", scroll_opts)
+	vim.api.nvim_set_keymap("v", "∆", "<C-d>zz", scroll_opts)
+	vim.api.nvim_set_keymap("v", "˚", "<C-u>zz", scroll_opts)
+	vim.api.nvim_set_keymap("n", "˙", "_", scroll_opts)
+	vim.api.nvim_set_keymap("n", "¬", "$", scroll_opts)
+	vim.api.nvim_set_keymap("v", "˙", "_", scroll_opts)
+	vim.api.nvim_set_keymap("v", "¬", "$", scroll_opts)
 else
-	vim.api.nvim_set_keymap("n", "<A-j>", "12jzz", {})
-	vim.api.nvim_set_keymap("n", "<A-k>", "12kzz", {})
-	vim.api.nvim_set_keymap("v", "<A-j>", "<C-d>zz", {})
-	vim.api.nvim_set_keymap("v", "<A-k>", "<C-u>zz", {})
-	vim.api.nvim_set_keymap("n", "<A-h>", "_", {})
-	vim.api.nvim_set_keymap("n", "<A-l>", "$", {})
-	vim.api.nvim_set_keymap("v", "<A-h>", "_", {})
-	vim.api.nvim_set_keymap("v", "<A-l>", "$", {})
+	vim.api.nvim_set_keymap("n", "<A-j>", "12gjzz", scroll_opts)
+	vim.api.nvim_set_keymap("n", "<A-k>", "12gkzz", scroll_opts)
+	vim.api.nvim_set_keymap("v", "<A-j>", "<C-d>zz", scroll_opts)
+	vim.api.nvim_set_keymap("v", "<A-k>", "<C-u>zz", scroll_opts)
+	vim.api.nvim_set_keymap("n", "<A-h>", "_", scroll_opts)
+	vim.api.nvim_set_keymap("n", "<A-l>", "$", scroll_opts)
+	vim.api.nvim_set_keymap("v", "<A-h>", "_", scroll_opts)
+	vim.api.nvim_set_keymap("v", "<A-l>", "$", scroll_opts)
 end
 
 -- Navigation between panes/windows

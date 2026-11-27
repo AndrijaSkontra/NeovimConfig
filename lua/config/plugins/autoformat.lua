@@ -30,6 +30,8 @@ return {
 			javascriptreact = getTypescriptFormater(),
 			html = getTypescriptFormater(),
 			css = getTypescriptFormater(),
+			json = { "jq" },
+			jsonc = { "prettier" },
 			typescriptreact = getTypescriptFormater(),
 			typescript = getTypescriptFormater(),
 			ts = getTypescriptFormater(),
